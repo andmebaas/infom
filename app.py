@@ -15,9 +15,16 @@ if "search_override" not in st.session_state:
 
 # --- TIITEL ---
 st.markdown(
-    "<h1 style='text-align: center; color: #2C3E50;'>Infomõjutuse kajastuste otsing</h1>",
-    unsafe_allow_html=True,
+    """
+    <h1 style='text-align: center; color: #2C3E50;'>
+        <a href="" style="text-decoration: none; color: inherit;">
+            Infomõjutuse kajastuste otsing
+        </a>
+    </h1>
+    """,
+    unsafe_allow_html=True
 )
+
 
 # --- ANDMEBAAS ---
 conn = sqlite3.connect("infomojutus.db")
