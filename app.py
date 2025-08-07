@@ -27,12 +27,12 @@ df = df.sort_values(by="kuupäev", ascending=False)  # ← see lisab vaikimisi j
 
 
 # --- KOLM JAOTUST ---
-vasak, keskmine, parem = st.columns([1, 2, 1])
+vasak, keskmine, parem = st.columns([1, 3, 1])
 
 # --- VASAKPOOLNE VEERG (Filtrid + Statistika) ---
 with vasak:
-    st.markdown("## 🧰 Filtrid")
-    teema_valik = st.multiselect("🎯 Vali teema:", sorted(df["teema"].dropna().unique()))
+    st.markdown("## Filtrid")
+    teema_valik = st.multiselect("Vali teema:", sorted(df["teema"].dropna().unique()))
     min_kuup = df["kuupäev"].min()
     max_kuup = df["kuupäev"].max()
     kuup_range = st.date_input("📆 Vali kuupäevavahemik:", [min_kuup, max_kuup])
@@ -42,10 +42,10 @@ with vasak:
 
 
     st.markdown("---")
-    st.markdown(f"**📄 Kirjeid kokku:** `{len(df)}`")
-    st.markdown(f"**🧩 Erinevaid teemasid:** `{df['teema'].nunique()}`")
+    st.markdown(f"**Kirjeid kokku:** `{len(df)}`")
+    st.markdown(f"**Erinevaid teemasid:** `{df['teema'].nunique()}`")
 
-    st.markdown("### 🗂 Teemade jaotus:")
+    st.markdown("### Teemade jaotus:")
     teema_arvud = df["teema"].value_counts()
     for teema, arv in teema_arvud.items():
         if arv >= 5:
@@ -89,7 +89,7 @@ filtered_df["kuupäev"] = filtered_df["kuupäev"].dt.strftime("%d.%m.%Y")
 
 # --- KESKMINE VEERG (Artiklid) ---
 with keskmine:
-    st.markdown("### 📑 Leitud artiklid")
+    st.markdown("### Leitud artiklid")
 
     def make_clickable(row):
         return f'<a href="{row.link}" target="_blank" style="color:#2980B9; text-decoration:none;">{row.pealkiri}</a>'
@@ -186,14 +186,22 @@ with keskmine:
     </html>
     """
 
-    components.html(html_table, height=600, scrolling=True)
+    components.html(
+    f"""
+    <div style="margin: 0 auto; width: 95%;">
+        {html_table}
+    </div>
+    """,
+    height=600,
+    scrolling=True
+)
 
 
 
 # --- PAREMPOOLNE VEERG (Infooperatsioonide loetelu) ---
 # --- PAREMPOOLNE VEERG (Infooperatsioonide loetelu) ---
 with parem:
-    st.markdown("## 🔦 Olulisemad operatsioonid")
+    st.markdown("## Olulisemad operatsioonid")
 
     operatsioonid = {
         "Operation Overload": ["overload"],
