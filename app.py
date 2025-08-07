@@ -89,113 +89,26 @@ filtered_df["kuupäev"] = filtered_df["kuupäev"].dt.strftime("%d.%m.%Y")
 
 # --- KESKMINE VEERG (Artiklid) ---
 with keskmine:
-    st.markdown("### Leitud artiklid")
-
-    def make_clickable(row):
-        return f'<a href="{row.link}" target="_blank" style="color:#2980B9; text-decoration:none;">{row.pealkiri}</a>'
-
-    # Klikitav pealkiri
-    filtered_df["pealkiri"] = filtered_df.apply(make_clickable, axis=1)
+    st.markdown("### 📑 Leitud artiklid")
 
     # Tagame, et vajalikud veerud on olemas
     for col in ["kuupäev", "pealkiri", "allikas", "juhtloik"]:
         if col not in filtered_df.columns:
             filtered_df[col] = ""
 
-    # Ainult soovitud veerud
+    # Kuvame klikitava pealkirja (kas st.markdown() või tavaline tekst)
+    def make_clickable(row):
+        return f"[{row.pealkiri}]({row.link})" if pd.notna(row.link) else row.pealkiri
+
+    filtered_df["pealkiri"] = filtered_df.apply(make_clickable, axis=1)
+
+    # Ainult vajalikud veerud
     filtered_df_display = filtered_df[["kuupäev", "pealkiri", "allikas", "juhtloik"]].copy()
 
-    # CSS stiil allikas-veeru kitsendamiseks
-    st.markdown(
-        """
-        <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-        th, td {
-            padding: 8px 12px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-            vertical-align: top;
-        }
-        td.allikas-col {
-            max-width: 150px;
-            width: 150px;
-            word-wrap: break-word;
-            white-space: normal;
-        }
-        tr:hover {background-color: #f5f5f5;}
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    # Loome HTML tabeli käsitsi
-    html_rows = []
-    for _, row in filtered_df_display.iterrows():
-        html_rows.append(f"""
-            <tr>
-                <td>{row['kuupäev']}</td>
-                <td>{row['pealkiri']}</td>
-                <td class="allikas-col">{row['allikas']}</td>
-                <td>{row['juhtloik']}</td>
-            </tr>
-        """)
-
-    html_table = f"""
-    <html>
-    <head>
-    <style>
-        table {{
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }}
-        th, td {{
-            padding: 8px 12px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-            vertical-align: top;
-        }}
-        td.allikas-col {{
-            max-width: 150px;
-            width: 150px;
-            word-wrap: break-word;
-            white-space: normal;
-        }}
-        tr:hover {{background-color: #f5f5f5;}}
-    </style>
-    </head>
-    <body>
-    <table>
-        <thead>
-            <tr>
-                <th>kuupäev</th>
-                <th>pealkiri</th>
-                <th>allikas</th>
-                <th>juhtloik</th>
-            </tr>
-        </thead>
-        <tbody>
-            {''.join(html_rows)}
-        </tbody>
-    </table>
-    </body>
-    </html>
-    """
-
-    components.html(
-    f"""
-    <div style="margin: 0 auto; width: 95%;">
-        {html_table}
-    </div>
-    """,
-    height=600,
-    scrolling=True
-)
-
+    # Kuvame artiklid tabelina
+    for i, row in filtered_df_display.iterrows():
+        st.markdown(f"**{row['kuupäev']}**  \n{row['pealkiri']}  \n*{row['allikas']}*  \n{row['juhtloik']}")
+        st.markdown("---")
 
 
 # --- PAREMPOOLNE VEERG (Infooperatsioonide loetelu) ---
