@@ -96,7 +96,7 @@ filtered_df["kuupäev"] = filtered_df["kuupäev"].dt.strftime("%d.%m.%Y")
 
 # --- KESKMINE VEERG (Artiklid) ---
 with keskmine:
-    st.markdown("### 📑 Leitud artiklid")
+    st.markdown("### Leitud artiklid")
 
     # Tagame, et vajalikud veerud on olemas
     for col in ["kuupäev", "pealkiri", "allikas", "juhtloik"]:
