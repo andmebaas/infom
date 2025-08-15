@@ -13,6 +13,16 @@ st.set_page_config(page_title="Infomõjutuse artiklid", layout="wide")
 if "search_override" not in st.session_state:
     st.session_state.search_override = None
 
+st.markdown("""
+    <style>
+    @media screen and (max-width: 768px) {
+        .operatsioonid-pealkiri {
+            font-size: 1rem !important;
+        }
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # --- TIITEL ---
 st.markdown(
     """
@@ -121,7 +131,7 @@ with keskmine:
 # --- PAREMPOOLNE VEERG (Infooperatsioonide loetelu) ---
 # --- PAREMPOOLNE VEERG (Infooperatsioonide loetelu) ---
 with parem:
-    st.markdown("## Olulisemad operatsioonid")
+    st.markdown('<h2 class="operatsioonid-pealkiri">Olulisemad operatsioonid</h2>', unsafe_allow_html=True)
 
     operatsioonid = {
         "Operation Overload": ["overload"],
