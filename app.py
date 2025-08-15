@@ -65,12 +65,12 @@ vasak, keskmine, parem = st.columns([1, 3, 1])
 with vasak:
     st.markdown("## Otsing")
     # Kui klõpsati teemanuppu, kasuta seda vaikimisi valikuna
-if "teema_valik" in st.session_state:
-    vaikimisi_teema_valik = st.session_state["teema_valik"]
-else:
-    vaikimisi_teema_valik = []
+    if "teema_valik" in st.session_state:
+        vaikimisi_teema_valik = st.session_state["teema_valik"]
+    else:
+        vaikimisi_teema_valik = []
 
-teema_valik = st.multiselect("Vali teema:", sorted(df["teema"].dropna().unique()), default=vaikimisi_teema_valik)
+    teema_valik = st.multiselect("Vali teema:", sorted(df["teema"].dropna().unique()), default=vaikimisi_teema_valik)
 
     min_kuup = df["kuupäev"].min()
     max_kuup = df["kuupäev"].max()
