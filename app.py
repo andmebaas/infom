@@ -38,7 +38,7 @@ vasak, keskmine, parem = st.columns([1, 3, 1])
 
 # --- VASAKPOOLNE VEERG (Filtrid + Statistika) ---
 with vasak:
-    st.markdown("## Filtrid")
+    st.markdown("## Otsing")
     teema_valik = st.multiselect("Vali teema:", sorted(df["teema"].dropna().unique()))
     min_kuup = df["kuupäev"].min()
     max_kuup = df["kuupäev"].max()
@@ -96,7 +96,7 @@ filtered_df["kuupäev"] = filtered_df["kuupäev"].dt.strftime("%d.%m.%Y")
 
 # --- KESKMINE VEERG (Artiklid) ---
 with keskmine:
-    st.markdown("### Leitud artiklid")
+    st.markdown("### Artiklid")
 
     # Tagame, et vajalikud veerud on olemas
     for col in ["kuupäev", "pealkiri", "allikas", "juhtloik"]:
