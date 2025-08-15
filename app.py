@@ -84,6 +84,11 @@ with vasak:
     st.markdown(f"**Kirjeid kokku:** `{len(df)}`")
     st.markdown(f"**Erinevaid teemasid:** `{df['teema'].nunique()}`")
 
+    viimati_uuendatud = df["kuupäev"].max()
+    st.markdown(f"**Viimati uuendatud:** `{viimati_uuendatud.strftime('%d.%m.%Y')}`")
+
+    st.markdown("### Teemade jaotus:")
+
     st.markdown("### Teemade jaotus:")
     teema_arvud = df["teema"].value_counts()
 
