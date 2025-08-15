@@ -18,7 +18,7 @@ st.markdown(
     """
     <h1 style='text-align: center; color: #2C3E50;'>
         <a href="" style="text-decoration: none; color: inherit;">
-            Infomõjutuse kajastuste otsing
+            Infomõjutuse kajastused
         </a>
     </h1>
     """,
