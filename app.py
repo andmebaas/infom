@@ -64,7 +64,14 @@ vasak, keskmine, parem = st.columns([1, 3, 1])
 # --- VASAKPOOLNE VEERG (Filtrid + Statistika) ---
 with vasak:
     st.markdown("## Otsing")
-    teema_valik = st.multiselect("Vali teema:", sorted(df["teema"].dropna().unique()))
+    # Kui klõpsati teemanuppu, kasuta seda vaikimisi valikuna
+if "teema_valik" in st.session_state:
+    vaikimisi_teema_valik = st.session_state["teema_valik"]
+else:
+    vaikimisi_teema_valik = []
+
+teema_valik = st.multiselect("Vali teema:", sorted(df["teema"].dropna().unique()), default=vaikimisi_teema_valik)
+
     min_kuup = df["kuupäev"].min()
     max_kuup = df["kuupäev"].max()
     kuup_range = st.date_input("📆 Vali kuupäevavahemik:", [min_kuup, max_kuup])
@@ -79,9 +86,14 @@ with vasak:
 
     st.markdown("### Teemade jaotus:")
     teema_arvud = df["teema"].value_counts()
+
+    def set_teema_filter(valitud_teema):
+        st.session_state["teema_valik"] = [valitud_teema]
+
     for teema, arv in teema_arvud.items():
         if arv >= 5:
-            st.markdown(f"- {teema}: {arv}")
+            st.button(f"{teema} ({arv})", key=f"teema_{teema}", on_click=set_teema_filter, args=(teema,))
+
 
 # --- FILTRID ---
 filtered_df = df.copy()
