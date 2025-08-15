@@ -131,7 +131,19 @@ with keskmine:
 # --- PAREMPOOLNE VEERG (Infooperatsioonide loetelu) ---
 # --- PAREMPOOLNE VEERG (Infooperatsioonide loetelu) ---
 with parem:
-    st.markdown('<h2 class="operatsioonid-pealkiri">Olulisemad operatsioonid</h2>', unsafe_allow_html=True)
+    st.markdown(
+    """
+    <style>
+    @media screen and (max-width: 768px) {
+        .operatsioonid-pealkiri {
+            font-size: 16px !important;
+        }
+    }
+    </style>
+    <h2 class="operatsioonid-pealkiri" style="font-size: 20px;">Olulisemad operatsioonid</h2>
+    """,
+    unsafe_allow_html=True
+)
 
     operatsioonid = {
         "Operation Overload": ["overload"],
