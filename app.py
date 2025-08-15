@@ -114,22 +114,38 @@ if len(kuup_range) == 2:
 
 
 if otsing:
-    # Eemaldame jutumärgid, teeme väiketäheks ja normaliseerime (nt š → s)
-
     otsing_clean = (
-    otsing.replace('"', '')
-          .replace("'", "")
-          .replace("“", "")
-          .replace("”", "")
-    )
-    keywords = [normalize(k.strip()) for k in otsing_clean.split(" OR ")]
+        otsing.replace('"', '')
+              .replace("'", "")
+              .replace("“", "")
+              .replace("”", "")
+    ).strip()
 
+    # Kontrollime, kas kasutatakse OR või AND
+    if " OR " in otsing_clean:
+        raw_keywords = otsing_clean.split(" OR ")
+        keywords = [normalize(k.strip()) for k in raw_keywords]
 
-    def contains_any_keyword(row):
-        row_text = normalize(str(row.values))
-        return any(k in row_text for k in keywords)
+        def contains_keywords(row):
+            row_text = normalize(str(row.values))
+            return any(k in row_text for k in keywords)
 
-    filtered_df = filtered_df[filtered_df.apply(contains_any_keyword, axis=1)]
+    elif " AND " in otsing_clean:
+        raw_keywords = otsing_clean.split(" AND ")
+        keywords = [normalize(k.strip()) for k in raw_keywords]
+
+        def contains_keywords(row):
+            row_text = normalize(str(row.values))
+            return all(k in row_text for k in keywords)
+
+    else:
+        keywords = [normalize(otsing_clean)]
+
+        def contains_keywords(row):
+            row_text = normalize(str(row.values))
+            return all(k in row_text for k in keywords)
+
+    filtered_df = filtered_df[filtered_df.apply(contains_keywords, axis=1)]
 
 
 filtered_df["kuupäev"] = filtered_df["kuupäev"].dt.strftime("%d.%m.%Y")
