@@ -88,8 +88,6 @@ with vasak:
     st.markdown(f"**Viimati uuendatud:** `{viimati_uuendatud.strftime('%d.%m.%Y')}`")
 
     st.markdown("### Teemade jaotus:")
-
-    st.markdown("### Teemade jaotus:")
     teema_arvud = df["teema"].value_counts()
 
     def set_teema_filter(valitud_teema):
