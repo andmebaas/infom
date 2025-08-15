@@ -15,6 +15,20 @@ if "search_override" not in st.session_state:
 
 st.markdown("""
     <style>
+    /* Vasakjoondus ja täislaius nuppudele */
+    button[kind="secondary"] {
+        width: 100% !important;
+        text-align: left !important;
+        justify-content: flex-start !important;
+    }
+
+    /* Ka tekstinupu sees oleva divi joondus */
+    button[kind="secondary"] div[data-testid="stMarkdownContainer"] {
+        text-align: left !important;
+        justify-content: flex-start !important;
+    }
+
+    /* Väiksem fondi suurus pealkirjale väiksel ekraanil */
     @media screen and (max-width: 768px) {
         .operatsioonid-pealkiri {
             font-size: 1rem !important;
@@ -22,6 +36,7 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+
 
 # --- TIITEL ---
 st.markdown(
