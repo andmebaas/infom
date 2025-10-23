@@ -97,6 +97,11 @@ with vasak:
         if arv >= 5:
             st.button(f"{teema} ({arv})", key=f"teema_{teema}", on_click=set_teema_filter, args=(teema,))
 
+    st.markdown("---")
+    if st.button("🔄 Tühjenda cache ja käivita uuesti"):
+        st.cache_data.clear()
+        st.cache_resource.clear()
+        st.rerun()
 
 # --- FILTRID ---
 filtered_df = df.copy()
